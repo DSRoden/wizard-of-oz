@@ -28,6 +28,7 @@
     player.animations.add('right', [1,2], 10, true);
     player.animations.add('up', [11,12,13], 10, true);
     player.animations.add('down', [4,5,6], 10, true);
+    player.assets = null;
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.setSize(10, 14, 2, 1);
