@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player;
+  var map, layer, cursors, player, mask;
 
   function create(){
     map = game.add.tilemap('map', 16, 16);
@@ -20,6 +20,12 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.setSize(10, 14, 2, 1);
+
+    mask = game.add.graphics(0, 0);
+    mask.beginFill(0xffffff);
+    mask.drawCircle(100, 100, 100);
+    player.mask = mask;
+    game.input.addMoveCallback(move, this);
 
     game.camera.follow(player);
 
