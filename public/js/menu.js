@@ -7,6 +7,13 @@
     game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
     game.load.image('tilesBw', '');
     game.load.spritesheet('player', '../assets/spaceman.png', 16, 16);
+    game.load.audio('collectMoney', '../assets/collectMoney.mp3');
+    game.load.audio('twister', '../assets/twister.wav');
+    game.load.audio('fallOff', '../assets/fallOff.wav');
+    game.load.audio('victoryBalloon', '../assets/victoryBalloon.mp3');
+    game.load.audio('victoryEmerald', '../assets/victoryEmerald.mp3');
+    game.load.audio('world1BG', '../assets/world1BG.mp3');
+    game.load.audio('world2BG', '../assets/world2BG.mp3');
   }
 
   function create(){
