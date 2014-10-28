@@ -1,1 +1,1 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'mario');
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'mario');
