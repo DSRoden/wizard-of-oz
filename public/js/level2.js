@@ -1,15 +1,25 @@
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime;
 
   function create(){
+    score = 0;
+    time = 30;
+
     map = game.add.tilemap('map', 16, 16);
     map.addTilesetImage('tiles');
     layer = map.createLayer(0);
     layer.resizeWorld();
     map.setCollisionBetween(54, 83);
     layer.debug = true;
+
+    // Score and timer
+    txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
+    txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
+    timer = game.time.events.loop(1000, subtractTime);
+    txtScore.fixedToCamera = true;
+    txtTime.fixedToCamera = true;
 
     player = game.add.sprite(48, 48, 'player', 1);
     player.animations.add('left', [8,9], 10, true);
@@ -24,9 +34,6 @@
     game.camera.follow(player);
 
     cursors = game.input.keyboard.createCursorKeys();
-
-    var help = game.add.text(16, 16, 'Arrows to move', {font: '14px Arial', fill: '#ffffff'});
-    help.fixedToCamera = true;
 
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(levelUp);
@@ -63,6 +70,13 @@
 
   function levelUp(){
    game.state.start('menu');
+ }
+
+ function subtractTime(){
+   time--;
+   txtTime.text = 'time: '+ time;
+   if(!time)
+     game.state.restart();
  }
 
 })();
