@@ -11,7 +11,7 @@
     map.setCollisionBetween(54, 83);
     layer.debug = true;
 
-    player = game.add.sprite(320, 300, 'player', 1);
+    player = game.add.sprite(48, 48, 'player', 1);
     player.animations.add('left', [8,9], 10, true);
     player.animations.add('right', [1,2], 10, true);
     player.animations.add('up', [11,12,13], 10, true);
@@ -27,7 +27,10 @@
 
     var help = game.add.text(16, 16, 'Arrows to move', {font: '14px Arial', fill: '#ffffff'});
     help.fixedToCamera = true;
-}
+
+    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(levelUp);
+  }
 
   function update(){
     game.physics.arcade.collide(player, layer);
@@ -56,6 +59,10 @@
       {
           player.animations.stop();
       }
-
   }
+
+  function levelUp(){
+   game.state.start('level2');
+ }
+
 })();
