@@ -126,11 +126,6 @@
       player.animations.stop();
     }
 
-    /*moneyBags.forEach(function(moneyBag){
-      moneyBag.anchor.setTo(0.5, 0.5);
-      moneyBag.alpha = 0.4;
-      game.add.tween(moneyBag).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-    });*/
 }
   function levelUp(){
     game.world.removeAll();
