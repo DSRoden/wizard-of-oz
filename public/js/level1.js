@@ -17,6 +17,7 @@
     map.setCollision(11);
     map.setCollisionBetween(17, 21);
     map.setCollisionBetween(25, 29);
+    map.setCollision(32);
     map.setCollision(33);
     map.setCollisionBetween(35, 37);
     map.setCollisionBetween(41, 45);
