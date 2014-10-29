@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, victoryEmerald;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald;
 
   function create(){
     score = 0;
@@ -28,6 +28,8 @@
 
 
     victoryEmerald = game.add.audio('victoryEmerald');
+    world2BGM = game.add.audio('world2BG');
+    world2BGM.play();
     //map.setCollisionBetween(54, 83);
     //layer.debug = true;
 
@@ -114,6 +116,7 @@
       player.kill();
     },
     playerWins: function() {
+      world2BGM.destroy();
       victoryEmerald.play();
     }
   }
