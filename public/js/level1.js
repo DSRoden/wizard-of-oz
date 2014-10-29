@@ -121,6 +121,7 @@
 }
   function levelUp(){
     game.world.removeAll();
+    world1BGM.destroy();
     game.state.start('level2');
   }
 
@@ -165,3 +166,4 @@
     if(player.mask)
       mask.drawCircle(100, 100, 250);
   }
+})();
