@@ -13,20 +13,22 @@
     layer.resizeWorld();
     layer.debug = true;
 
-    map.setTileIndexCallback([6,8], offPath.killPlayer, this);
-    map.setTileIndexCallback([14,16], offPath.killPlayer, this);
+    //dieTiles = [6,7,8,14,15,16,22,23,24,30,31,32,38,39,40,41,43,44,46,47,48];
+    winTiles = [1,2,3,4,5,9,10,11,12,13,17,18,19,20,21,25,26,27,28,29,33,34,35,36,37];
+    //map.setTileIndexCallback(dieTiles, offPath.killPlayer, this);
+    /*map.setTileIndexCallback([14,15,16], offPath.killPlayer, this);
     map.setTileIndexCallback([22,24], offPath.killPlayer, this);
     map.setTileIndexCallback([30,32], offPath.killPlayer, this);
     map.setTileIndexCallback([38,40], offPath.killPlayer, this);
-    map.setTileIndexCallback([41], offPath.killPlayer, this);
+    map.setTileIndexCallback([41, 41], offPath.killPlayer, this);
     map.setTileIndexCallback([43,44], offPath.killPlayer, this);
-    map.setTileIndexCallback([46,48], offPath.killPlayer, this);
+    map.setTileIndexCallback([46,48], offPath.killPlayer, this);*/
 
-    map.setTileIndexCallback([1,5], offPath.playerWins, this);
-    map.setTileIndexCallback([9,13], offPath.playerWins, this);
+    map.setTileIndexCallback(winTiles, offPath.playerWins, this);
+    /*map.setTileIndexCallback([9,13], offPath.playerWins, this);
     map.setTileIndexCallback([17,21], offPath.playerWins, this);
     map.setTileIndexCallback([25,29], offPath.playerWins, this);
-    map.setTileIndexCallback([33,37], offPath.playerWins, this);
+    map.setTileIndexCallback([33,37], offPath.playerWins, this);*/
 
     victoryEmerald = game.add.audio('victoryEmerald');
     world2BGM = game.add.audio('world2BG');
