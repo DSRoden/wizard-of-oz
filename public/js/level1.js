@@ -151,5 +151,9 @@
     player.assets++;
   }
 
+  function displayWorld(){
+    if(player.mask)
+      mask.drawCircle(100, 100, 250);
+  }
 
 })();
