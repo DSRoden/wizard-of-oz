@@ -1,11 +1,12 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, collectM, txtTime, timer, time;
+  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags,
+      elapsed = 0;
 
   function create(){
     score = 0;
-    time = 3000000000;
+    time = 3000000;
 
     //Setting up the tilemap and layer
     map = game.add.tilemap('mapBw', 16, 16);
@@ -17,11 +18,19 @@
     map.setCollision(11);
     map.setCollisionBetween(17, 21);
     map.setCollisionBetween(25, 29);
+    map.setCollision(32);
     map.setCollision(33);
     map.setCollisionBetween(35, 37);
     map.setCollisionBetween(41, 45);
 
-    collectM = game.add.audio('collectMoney');
+    //play background music
+    world1BGM = game.add.audio('world1BG');
+    world1BGM.loop = true;
+    world1BGM.play();
+    //collectMoneyM = game.add.audio('collectMoney');
+    //twisterM = game.add.audio('twister');
+    //victoryBalloonM = game.add.audio('victoryBalloon');
+
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -32,40 +41,41 @@
 
     //Player sprite code
     player = game.add.sprite(650, 650, 'player', 1);
-    player.animations.add('left', [8,9], 10, true);
-    player.animations.add('right', [1,2], 10, true);
-    player.animations.add('up', [11,12,13], 10, true);
-    player.animations.add('down', [4,5,6], 10, true);
+    player.animations.add('left', [0,1], 10, true);
+    player.animations.add('right', [3,4], 10, true);
+    player.animations.add('up', [5], 10, true);
+    player.animations.add('down', [2], 10, true);
     player.assets = null;
-
     game.physics.enable(player, Phaser.Physics.ARCADE);
-    player.body.setSize(10, 14, 2, 1);
 
-    console.log(player.x, player.y);
+    player.body.collideWorldBounds = true;
+
+
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 500);
+    mask.drawCircle(100, 100, 250);
     layer.mask = mask;
 
     game.camera.follow(player);
+
+    // Twisters
+    twisters = game.add.group();
+    twisters.enableBody = true;
+    twisters.physicsBodyType = Phaser.Physics.ARCADE;
+    twisters.createMultiple(5, 'twister');
+    twisters.setAll('checkWorldBounds', true);
+    twisters.setAll('outOfBoundsKill', true);
 
     //moneyBag code
     moneyBags = game.add.group();
     moneyBags.enableBody = true;
     moneyBags.physicsBodyType = Phaser.Physics.ARCADE;
-    //moneyBags.setAll('mask', mask);
+    moneyBags.setAll('checkWorldBounds', true);
+    moneyBags.setAll('mask', mask);
 
-    for(var i = 0; i < 6; i++){
-      var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
-      moneyBags.add(moneyBag);
-    }
-    moneyBags.setAll('body.gravity.y', 100);
-    moneyBags.setAll('body.bounce.y', 0.5);
-    moneyBags.setAll('body.collideWorldBounds', true);
-    //moneyBags.anchor.setTo(0.5, 0.5);
-    moneyBags.setAll('alpha', 0.4)
-    game.add.tween(moneyBags).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    for(var i = 0; i < 6; i++)
       //moneyBag.mask = mask;
+      moneyBags.add(game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag'));
 
     // Cursors move player
     cursors = game.input.keyboard.createCursorKeys();
@@ -75,36 +85,42 @@
     spaceKey.onDown.add(levelUp);
   }
 
-
-
   function update(){
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(moneyBags, layer);
-    game.physics.arcade.overlap(moneyBags, player, collectMoney);
+    game.physics.arcade.overlap(player, twisters, twisterThrow);
+    game.physics.arcade.overlap(player, moneyBags, collectMoney);
     player.body.velocity.set(0);
+
+    if(twisters.getFirstAlive()){
+      game.physics.arcade.accelerateToObject(twisters.getFirstAlive(), player, 200);
+    }else{
+      sendTwister();
+    }
 
     //Player movement using cursors
     if(cursors.left.isDown){
       move();
-      player.body.velocity.x = -100;
+      player.body.velocity.x = -300;
       player.play('left');
     }else if (cursors.right.isDown){
       move();
-      player.body.velocity.x = 100;
+      player.body.velocity.x = 300;
       player.play('right');
     }else if (cursors.up.isDown){
       move();
-      player.body.velocity.y = -100;
+      player.body.velocity.y = -300;
       player.play('up');
     }else if (cursors.down.isDown){
       move();
-      player.body.velocity.y = 100;
+      player.body.velocity.y = 300;
       player.play('down');
     }else{
       player.animations.stop();
     }
 }
   function levelUp(){
+    game.world.removeAll();
     game.state.start('level2');
   }
 
@@ -112,7 +128,20 @@
     time--;
     txtTime.text = 'time: '+ time;
     if(!time)
-      game.state.restart();
+      restartGame();
+  }
+
+  function sendTwister(){
+    if (time - elapsed < 0 || elapsed === 0){
+      var t = twisters.getFirstDead();
+      t.mask = mask;
+      t.reset(840, game.world.randomY);
+      elapsed = time - 3;
+    }
+  }
+
+  function twisterThrow(){
+    player.reset(game.world.randomX, game.world.randomY);
   }
 
   function move(){
@@ -120,11 +149,19 @@
     mask.y = player.y - 100;
   }
 
+  function restartGame(){
+    elapsed = 0;
+    game.world.removeAll();
+    game.state.restart();
+  }
+
   function collectMoney(player, moneyBag){
-        moneyBag.kill();
-        collectM.play();
-        player.assets++;
-      }
+    moneyBag.kill();
+    //collectMoney.play();
+    player.assets++;
+  }
 
-
-})();
+  function displayWorld(){
+    if(player.mask)
+      mask.drawCircle(100, 100, 250);
+  }
