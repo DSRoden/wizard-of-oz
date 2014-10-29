@@ -5,7 +5,7 @@
     game.load.tilemap('map', '../assets/catastrophi_level2.csv', null, Phaser.Tilemap.CSV);
     game.load.tilemap('mapBw', '', null, Phaser.Tilemap.CSV);
     game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
-    game.load.image('moneyBag', '../assets/xy');//moneyBag image
+    game.load.image('moneyBag', '../assets/star.png');//moneyBag image
     game.load.image('tilesBw', '');
     game.load.spritesheet('player', '../assets/spaceman.png', 16, 16);
     game.load.audio('collectMoney', '../assets/collectMoney.mp3');
