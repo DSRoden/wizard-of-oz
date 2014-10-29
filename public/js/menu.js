@@ -2,6 +2,9 @@
   game.state.add('menu', {preload:preload, create:create});
 
   function preload(){
+    game.load.image('startscreen', '../assets/menu/startscreen.png');
+    game.load.image('start', '../assets/menu/start-button.png');
+
     game.load.tilemap('map', '../assets/catastrophi_level2.csv', null, Phaser.Tilemap.CSV);
     game.load.tilemap('mapBw', '', null, Phaser.Tilemap.CSV);
     game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
@@ -18,13 +21,17 @@
   }
 
   function create(){
+    game.add.sprite(0,0,'startscreen');
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    var text = game.add.text(game.world.centerX, game.world.centerY, 'Press SPACE to Begin', {fill: '#ffffff'});
-    text.anchor.setTo(0.5);
+    //var text = game.add.text(game.world.centerX+25, game.world.centerY+250, 'Press SPACE to Begin', {fill: '#2E3192'});
+    //text.anchor.setTo(0.5);
 
-    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(start);
+    var button = game.add.button(game.world.centerX, game.world.centerY+250, 'start', start);
+    button.anchor.setTo(0.5);
+    //var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    //spaceKey.onDown.add(start);
   }
    function start(){
     game.state.start('level1');

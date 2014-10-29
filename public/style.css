@@ -1,0 +1,9 @@
+body{
+  width: 100%;
+  background-color: #E8E5E5;
+}
+#mario {
+  width: 800px;
+  margin: 0 auto;
+  border: 3px solid #4D4D4D;
+}
