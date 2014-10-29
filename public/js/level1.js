@@ -129,6 +129,7 @@
 }
   function levelUp(){
     game.world.removeAll();
+    world1BGM.destroy();
     game.state.start('level2');
   }
 
