@@ -33,7 +33,7 @@
     player = game.add.sprite(650, 650, 'player', 1);
     player.animations.add('left', [0,1], 10, true);
     player.animations.add('right', [3,4], 10, true);
-    player.animations.add('up', [2], 10, true);
+    player.animations.add('up', [5], 10, true);
     player.animations.add('down', [2], 10, true);
     player.assets = null;
     game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -124,7 +124,7 @@
   function sendTwister(){
     if (time - elapsed < 0 || elapsed === 0){
       var t = twisters.getFirstDead();
-      //t.mask = mask;
+      t.mask = mask;
       t.reset(840, game.world.randomY);
       elapsed = time - 3;
     }
