@@ -50,7 +50,7 @@
 
     player.body.collideWorldBounds = true;
 
-
+    //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
     mask.drawCircle(100, 100, 250);
@@ -70,6 +70,7 @@
     moneyBags = game.add.group();
     moneyBags.enableBody = true;
     moneyBags.physicsBodyType = Phaser.Physics.ARCADE;
+    moneyBags._mask = mask;
     moneyBags.setAll('checkWorldBounds', true);
     moneyBags.setAll('mask', mask);
 
@@ -86,6 +87,9 @@
   }
 
   function update(){
+    if(player.assets > 0)
+      displayWorld();
+
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(moneyBags, layer);
     game.physics.arcade.overlap(player, twisters, twisterThrow);
@@ -100,20 +104,20 @@
 
     //Player movement using cursors
     if(cursors.left.isDown){
-      move();
       player.body.velocity.x = -300;
+      move();
       player.play('left');
     }else if (cursors.right.isDown){
-      move();
       player.body.velocity.x = 300;
+      move();
       player.play('right');
     }else if (cursors.up.isDown){
-      move();
       player.body.velocity.y = -300;
+      move();
       player.play('up');
     }else if (cursors.down.isDown){
-      move();
       player.body.velocity.y = 300;
+      move();
       player.play('down');
     }else{
       player.animations.stop();
@@ -161,9 +165,17 @@
     player.assets++;
   }
 
+  var i = 1;
   function displayWorld(){
-    if(player.mask)
-      mask.drawCircle(100, 100, 250);
+    i++;
+
+    if(i * 3 < 800);
+      mask.destroy();
+      mask = game.add.graphics(player.x -100, player.y -100);
+      mask.beginFill(0xffffff);
+      mask.drawCircle(100, 100, 250 + i * 3);
+      layer.mask = mask;
+
   }
 
 })();
