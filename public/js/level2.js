@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald;
 
   function create(){
     score = 0;
@@ -11,7 +11,6 @@
     map.addTilesetImage('Oz');
     layer = map.createLayer(0);
     layer.resizeWorld();
-    layer.debug = true;
 
     map.setTileIndexCallback([6,8], offPath.killPlayer, this);
     map.setTileIndexCallback([14,16], offPath.killPlayer, this);
@@ -33,7 +32,6 @@
     world2BGM.play();
     //map.setCollisionBetween(54, 83);
     //layer.debug = true;
-    fallOffSound = game.add.audio('fallOffSound');
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -116,11 +114,8 @@
 
   var offPath = {
     killPlayer: function () {
-      fallOffSound.play();
       player.kill();
-      player.reset(48, 48);
-
-      //game.state.start('level2');
+      game.state.start('level2');
     },
     playerWins: function() {
       world2BGM.destroy();
