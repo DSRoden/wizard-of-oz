@@ -31,7 +31,7 @@
     player.assets = null;
 
     //moneyBag code
-    moneyBag = game.add.group();
+  /*  moneyBag = game.add.group();
     moneyBag.enableBody = true;
     moneyBag.physicsBodyType = Phaser.Physics.ARCADE;
     moneyBag.setAll('body.collideWorldBounds', true);
@@ -39,7 +39,7 @@
     for(var i = 0; i < 10; i++){
       var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY - (20 + 28), 'moneyBag');
       moneyBags.add(moneyBag);
-    moneyBag = game.add.image(randomX, randomY, 'moneyBag', 1);
+    moneyBag = game.add.image(randomX, randomY, 'moneyBag', 1);*/
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.setSize(10, 14, 2, 1);
