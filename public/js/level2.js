@@ -53,12 +53,6 @@
     game.physics.arcade.collide(player, layer);
     player.body.velocity.set(0);
 
-    if(twisters.getFirstAlive()){
-      game.physics.arcade.accelerateToObject(twisters.getFirstAlive(), player, 200);
-    }else{
-      sendTwister();
-    }
-
     if(cursors.left.isDown){
       player.body.velocity.x = -100;
       player.play('left');
