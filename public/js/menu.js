@@ -9,13 +9,13 @@
     game.load.tilemap('mapBw', '../assets/world1/kansas.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
     game.load.image('twister', '../assets/world1/tornado.png');
-    game.load.image('moneyBag', '../assets/world1/package.png');//moneyBag image
+    game.load.image('moneyBag', '../assets/world1/package.png');
     game.load.image('kansas', '../assets/world1/tmw_desert_spacing_bw.png');
     game.load.image('Oz', '../assets/world2/tmw_desert_spacing_gold.png');
     game.load.spritesheet('player', '../assets/wizard.png', 23, 30);
     game.load.audio('collectMoney', '../assets/audio/collectMoney.mp3');
-    game.load.audio('twister', '../assets/audio/twister.wav');
-    game.load.audio('fallOff', '../assets/audio/fallOff.wav');
+    game.load.audio('twisterSound', '../assets/audio/twister.wav');
+    game.load.audio('fallOffSound', '../assets/audio/fallOff.wav');
     game.load.audio('victoryBalloon', '../assets/audio/victoryBalloon.mp3');
     game.load.audio('victoryEmerald', '../assets/audio/victoryEmerald.mp3');
     game.load.audio('world1BG', '../assets/audio/world1BG.mp3');
