@@ -6,18 +6,19 @@
     game.load.image('start', '../assets/menu/start-button.png');
 
     game.load.tilemap('map', '../assets/catastrophi_level2.csv', null, Phaser.Tilemap.CSV);
-    game.load.tilemap('mapBw', '', null, Phaser.Tilemap.CSV);
+    game.load.tilemap('mapBw', '../assets/world1/kansas.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
-    game.load.image('moneyBag', '../assets/xy');//moneyBag image
-    game.load.image('tilesBw', '');
-    game.load.spritesheet('player', '../assets/spaceman.png', 16, 16);
-    game.load.audio('collectMoney', '../assets/collectMoney.mp3');
-    game.load.audio('twister', '../assets/twister.wav');
-    game.load.audio('fallOff', '../assets/fallOff.wav');
-    game.load.audio('victoryBalloon', '../assets/victoryBalloon.mp3');
-    game.load.audio('victoryEmerald', '../assets/victoryEmerald.mp3');
-    game.load.audio('world1BG', '../assets/world1BG.mp3');
-    game.load.audio('world2BG', '../assets/world2BG.mp3');
+    game.load.image('twister', '../assets/world1/tornado.png');
+    game.load.image('moneyBag', '../assets/world1/package.png');//moneyBag image
+    game.load.image('kansas', '../assets/world1/tmw_desert_spacing_bw.png');
+    game.load.spritesheet('player', '../assets/wizard.png', 23, 30);
+    game.load.audio('collectMoney', '../assets/audio/collectMoney.mp3');
+    game.load.audio('twister', '../assets/audio/twister.wav');
+    game.load.audio('fallOff', '../assets/audio/fallOff.wav');
+    game.load.audio('victoryBalloon', '../assets/audio/victoryBalloon.mp3');
+    game.load.audio('victoryEmerald', '../assets/audio/victoryEmerald.mp3');
+    game.load.audio('world1BG', '../assets/audio/world1BG.mp3');
+    game.load.audio('world2BG', '../assets/audio/world2BG.mp3');
   }
 
   function create(){
@@ -33,7 +34,8 @@
     //var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     //spaceKey.onDown.add(start);
   }
-   function start(){
+
+  function start(){
     game.state.start('level1');
   }
 

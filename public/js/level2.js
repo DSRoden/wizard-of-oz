@@ -1,11 +1,11 @@
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters;
 
   function create(){
     score = 0;
-    time = 30;
+    time = 90;
 
     map = game.add.tilemap('map', 16, 16);
     map.addTilesetImage('tiles');
@@ -21,6 +21,7 @@
     txtScore.fixedToCamera = true;
     txtTime.fixedToCamera = true;
 
+    // Player
     player = game.add.sprite(48, 48, 'player', 1);
     player.animations.add('left', [8,9], 10, true);
     player.animations.add('right', [1,2], 10, true);
@@ -30,6 +31,15 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.setSize(10, 14, 2, 1);
+
+    // Twisters
+    twisters = game.add.group();
+    twisters.enableBody = true;
+    twisters.physicsBodyType = Phaser.Physics.ARCADE;
+    twisters.createMultiple(5, 'twister');
+    //twisters.setAll('body.gravity.x', -200);
+    twisters.setAll('checkWorldBounds', true);
+    twisters.setAll('outOfBoundsKill', true);
 
     game.camera.follow(player);
 
@@ -57,6 +67,15 @@
       player.play('down');
     }else{
       player.animations.stop();
+    }
+  }
+
+  var elapsed = 0;
+  function sendTwister(){
+    if (time - elapsed < 0 || elapsed === 0){
+      var t = twisters.getFirstDead();
+      t.reset(840, game.world.randomY);
+      elapsed = time - 3;
     }
   }
 
