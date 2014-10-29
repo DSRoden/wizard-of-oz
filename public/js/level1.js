@@ -5,7 +5,7 @@
 
   function create(){
     score = 0;
-    time = 30;
+    time = 3000000000;
 
     //Setting up the tilemap and layer
     map = game.add.tilemap('mapBw', 16, 16);
@@ -23,7 +23,7 @@
     txtTime.fixedToCamera = true;
 
     //Player sprite code
-    player = game.add.sprite(48, 48, 'player', 1);
+    player = game.add.sprite(650, 650, 'player', 1);
     player.animations.add('left', [8,9], 10, true);
     player.animations.add('right', [1,2], 10, true);
     player.animations.add('up', [11,12,13], 10, true);
@@ -47,7 +47,7 @@
     console.log(player.x, player.y);
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 1000);
+    mask.drawCircle(100, 100, 100);
     layer.mask = mask;
 
     game.camera.follow(player);
