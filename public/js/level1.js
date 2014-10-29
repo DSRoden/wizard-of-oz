@@ -63,8 +63,8 @@
     moneyBags.setAll('body.bounce.y', 0.5);
     moneyBags.setAll('body.collideWorldBounds', true);
     //moneyBags.anchor.setTo(0.5, 0.5);
-    //moneyBags.setAll('alpha', 0.4)
-    //game.add.tween(moneyBags).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    moneyBags.setAll('alpha', 0.4)
+    game.add.tween(moneyBags).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
       //moneyBag.mask = mask;
 
     // Cursors move player
