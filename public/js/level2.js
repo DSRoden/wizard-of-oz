@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
 
   function create(){
     score = 0;
@@ -12,9 +12,9 @@
     layer = map.createLayer(0);
     layer.resizeWorld();
 
-    //dieTiles = [6,7,8,14,15,16,22,23,24,30,31,32,38,39,40,41,43,44,46,47,48];
+    dieTiles = [6,7,8,14,15,16,22,23,24,30,31,32,38,39,40,41,43,44,46,47,48];
     winTiles = [1,2,3,4,5,9,10,11,12,13,17,18,19,20,21,25,26,27,28,29,33,34,35,36,37];
-    //map.setTileIndexCallback(dieTiles, offPath.killPlayer, this);
+    map.setTileIndexCallback(dieTiles, offPath.killPlayer, this);
     /*map.setTileIndexCallback([14,15,16], offPath.killPlayer, this);
     map.setTileIndexCallback([22,24], offPath.killPlayer, this);
     map.setTileIndexCallback([30,32], offPath.killPlayer, this);
@@ -32,6 +32,7 @@
     victoryEmerald = game.add.audio('victoryEmerald');
     world2BGM = game.add.audio('world2BG');
     world2BGM.play();
+    fallOffSound = game.add.audio('fallOffSound');
     //map.setCollisionBetween(54, 83);
     //layer.debug = true;
 
@@ -51,6 +52,7 @@
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds = true;
+    player.anchor.setTo(0.5);
 
     game.camera.follow(player);
 
@@ -116,8 +118,9 @@
 
   var offPath = {
     killPlayer: function () {
+      fallOffSound.play();
       player.kill();
-      game.state.start('level2');
+      player.reset(48,48);
     },
     playerWins: function() {
       world2BGM.destroy();
