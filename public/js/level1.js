@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time;
+  var map, layer, cursors, player, mask, txtScore, collectM, txtTime, timer, time;
 
   function create(){
     score = 0;
@@ -20,6 +20,8 @@
     map.setCollision(33);
     map.setCollisionBetween(35, 37);
     map.setCollisionBetween(41, 45);
+
+    collectM = game.add.audio('collectMoney');
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -42,7 +44,7 @@
     console.log(player.x, player.y);
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 100);
+    mask.drawCircle(100, 100, 500);
     layer.mask = mask;
 
     game.camera.follow(player);
@@ -51,13 +53,19 @@
     moneyBags = game.add.group();
     moneyBags.enableBody = true;
     moneyBags.physicsBodyType = Phaser.Physics.ARCADE;
-    moneyBags.setAll('body.collideWorldBounds', true);
     //moneyBags.setAll('mask', mask);
 
-    for(var i = 0; i < 6; i++)
+    for(var i = 0; i < 6; i++){
       var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
       moneyBags.add(moneyBag);
-      moneyBag.mask = mask;
+    }
+    moneyBags.setAll('body.gravity.y', 100);
+    moneyBags.setAll('body.bounce.y', 0.5);
+    moneyBags.setAll('body.collideWorldBounds', true);
+    //moneyBags.anchor.setTo(0.5, 0.5);
+    //moneyBags.setAll('alpha', 0.4)
+    //game.add.tween(moneyBags).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+      //moneyBag.mask = mask;
 
     // Cursors move player
     cursors = game.input.keyboard.createCursorKeys();
@@ -72,6 +80,7 @@
   function update(){
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(moneyBags, layer);
+    game.physics.arcade.overlap(moneyBags, player, collectMoney);
     player.body.velocity.set(0);
 
     //Player movement using cursors
@@ -113,7 +122,7 @@
 
   function collectMoney(player, moneyBag){
         moneyBag.kill();
-        o.l.collectMoney.play();
+        collectM.play();
         player.assets++;
       }
 
