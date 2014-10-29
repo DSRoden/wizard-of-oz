@@ -26,7 +26,6 @@
     map.setTileIndexCallback([25,29], offPath.playerWins, this);
     map.setTileIndexCallback([33,37], offPath.playerWins, this);
 
-
     victoryEmerald = game.add.audio('victoryEmerald');
     //map.setCollisionBetween(54, 83);
     //layer.debug = true;
@@ -46,6 +45,7 @@
     player.animations.add('down', [4,5,6], 10, true);
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
+    player.body.collideWorldBounds = true;
 
     game.camera.follow(player);
 
@@ -112,10 +112,12 @@
   var offPath = {
     killPlayer: function () {
       player.kill();
+      game.state.start('level2');
     },
     playerWins: function() {
       victoryEmerald.play();
     }
   }
+
 
 })();
