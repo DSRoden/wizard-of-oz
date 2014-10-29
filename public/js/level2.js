@@ -126,7 +126,7 @@
       world2BGM.destroy();
       victoryEmerald.play();
     }
-  }
+  };
 
 
 })();

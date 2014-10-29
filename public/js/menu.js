@@ -27,13 +27,8 @@
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //var text = game.add.text(game.world.centerX+25, game.world.centerY+250, 'Press SPACE to Begin', {fill: '#2E3192'});
-    //text.anchor.setTo(0.5);
-
     var button = game.add.button(game.world.centerX, game.world.centerY+250, 'start', start);
     button.anchor.setTo(0.5);
-    //var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    //spaceKey.onDown.add(start);
   }
 
   function start(){
