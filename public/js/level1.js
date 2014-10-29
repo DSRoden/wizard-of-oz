@@ -12,8 +12,14 @@
     map.addTilesetImage('kansas');
     layer = map.createLayer(0);
     layer.resizeWorld();
-    //map.setCollisionBetween(54, 83);
-    layer.debug = true;
+    map.setCollisionBetween(1, 3);
+    map.setCollision(9);
+    map.setCollision(11);
+    map.setCollisionBetween(17, 21);
+    map.setCollisionBetween(25, 29);
+    map.setCollision(33);
+    map.setCollisionBetween(35, 37);
+    map.setCollisionBetween(41, 45);
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -61,7 +67,7 @@
   }
 
   function update(){
-    //game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(player, layer);
     player.body.velocity.set(0);
 
     //Player movement using cursors
