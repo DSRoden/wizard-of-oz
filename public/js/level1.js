@@ -8,11 +8,11 @@
     time = 30;
 
     //Setting up the tilemap and layer
-    map = game.add.tilemap('map', 16, 16);
-    map.addTilesetImage('tiles');
+    map = game.add.tilemap('mapBw', 16, 16);
+    map.addTilesetImage('kansas');
     layer = map.createLayer(0);
     layer.resizeWorld();
-    map.setCollisionBetween(54, 83);
+    //map.setCollisionBetween(54, 83);
     layer.debug = true;
 
     // Score and timer
@@ -47,7 +47,7 @@
     console.log(player.x, player.y);
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 100);
+    mask.drawCircle(100, 100, 1000);
     layer.mask = mask;
 
     game.camera.follow(player);
@@ -61,7 +61,7 @@
   }
 
   function update(){
-    game.physics.arcade.collide(player, layer);
+    //game.physics.arcade.collide(player, layer);
     player.body.velocity.set(0);
 
     //Player movement using cursors
