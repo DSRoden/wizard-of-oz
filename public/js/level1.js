@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time;
+  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM;
 
   function create(){
     score = 0;
@@ -20,6 +20,15 @@
     map.setCollision(33);
     map.setCollisionBetween(35, 37);
     map.setCollisionBetween(41, 45);
+
+    //play background music
+    world1BGM = game.add.audio('world1BG');
+    world1BGM.loop = true;
+    world1BGM.play();
+    //collectMoneyM = game.add.audio('collectMoney');
+    //twisterM = game.add.audio('twister');
+    //victoryBalloonM = game.add.audio('victoryBalloon');
+
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
