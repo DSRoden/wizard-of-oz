@@ -32,28 +32,29 @@
     //victoryBalloonM = game.add.audio('victoryBalloon');
 
 
-    // Score and timer
-    txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
-    txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
-    timer = game.time.events.loop(1000, subtractTime);
-    txtScore.fixedToCamera = true;
-    txtTime.fixedToCamera = true;
-
     //Player sprite code
     player = game.add.sprite(650, 650, 'player', 1);
     player.animations.add('left', [0,1], 10, true);
     player.animations.add('right', [3,4], 10, true);
     player.animations.add('up', [5], 10, true);
     player.animations.add('down', [2], 10, true);
-    player.assets = null;
+    player.assets = 0;
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.collideWorldBounds = true;
 
+    // Score and timer
+    txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
+    txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
+    txtAssets = game.add.text(10, 60, 'asssets: ' + player.assets + '/6', { font: "20px Arial", fill: "#ffffff"});
+    timer = game.time.events.loop(1000, subtractTime);
+    txtScore.fixedToCamera = true;
+    txtTime.fixedToCamera = true;
+
     //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 700);
+    mask.drawCircle(100, 100, 250);
     layer.mask = mask;
 
     game.camera.follow(player);
@@ -93,7 +94,7 @@
   }
 
   function update(){
-    if(player.assets > 0)
+    if(player.assets > 5)
       displayWorld();
 
     game.physics.arcade.collide(player, layer);
