@@ -27,8 +27,8 @@
     world1BGM = game.add.audio('world1BG');
     world1BGM.loop = true;
     world1BGM.play();
-    //collectMoneyM = game.add.audio('collectMoney');
-    //twisterM = game.add.audio('twister');
+    collectM = game.add.audio('collectMoney');
+    twisterM = game.add.audio('twisterSound');
     //victoryBalloonM = game.add.audio('victoryBalloon');
 
 
@@ -53,7 +53,7 @@
 
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 250);
+    mask.drawCircle(100, 100, 700);
     layer.mask = mask;
 
     game.camera.follow(player);
@@ -70,12 +70,19 @@
     moneyBags = game.add.group();
     moneyBags.enableBody = true;
     moneyBags.physicsBodyType = Phaser.Physics.ARCADE;
-    moneyBags.setAll('checkWorldBounds', true);
     moneyBags.setAll('mask', mask);
+    moneyBags._mask = mask;
 
-    for(var i = 0; i < 6; i++)
-      //moneyBag.mask = mask;
-      moneyBags.add(game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag'));
+    for(var i = 0; i < 6; i++){
+      var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
+      moneyBags.add(moneyBag);
+    }
+    moneyBags.setAll('body.gravity.y', 100);
+    moneyBags.setAll('body.bounce.y', 1);
+    moneyBags.setAll('body.collideWorldBounds', true);
+
+
+
 
     // Cursors move player
     cursors = game.input.keyboard.createCursorKeys();
@@ -118,6 +125,12 @@
     }else{
       player.animations.stop();
     }
+
+    /*moneyBags.forEach(function(moneyBag){
+      moneyBag.anchor.setTo(0.5, 0.5);
+      moneyBag.alpha = 0.4;
+      game.add.tween(moneyBag).to({alpha : 1}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    });*/
 }
   function levelUp(){
     game.world.removeAll();
@@ -157,7 +170,7 @@
 
   function collectMoney(player, moneyBag){
     moneyBag.kill();
-    //collectMoney.play();
+    collectM.play();
     player.assets++;
   }
 
@@ -165,3 +178,4 @@
     if(player.mask)
       mask.drawCircle(100, 100, 250);
   }
+ })();
