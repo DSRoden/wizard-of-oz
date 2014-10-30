@@ -77,7 +77,7 @@
     moneyBags._mask = mask;
     moneyBags.setAll('checkWorldBounds', true);
 
-    for(var i = 0; i < 6; i++){
+    for(var i = 0; i < 9; i++){
       var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
       moneyBags.add(moneyBag);
     }
