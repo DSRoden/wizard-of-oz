@@ -49,8 +49,9 @@
     //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 2500);
+    mask.drawCircle(100, 100, 250);
     layer.mask = mask;
+    balloon.mask = mask;
 
     game.camera.follow(player);
 
@@ -78,7 +79,7 @@
     moneyBags.setAll('checkWorldBounds', true);
 
     for(var i = 0; i < 9; i++){
-      var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
+      var moneyBag = game.add.sprite((Math.floor(Math.random() * 1100) + 100), (Math.floor(Math.random() * 1100) + 100),  'moneyBag');
       moneyBags.add(moneyBag);
     }
     moneyBags.setAll('body.gravity.y', 100);
@@ -105,7 +106,7 @@
     player.body.velocity.set(0);
 
     if(twisters.getFirstAlive()){
-      game.physics.arcade.accelerateToObject(twisters.getFirstAlive(), player, 200);
+      game.physics.arcade.accelerateToObject(twisters.getFirstAlive(), player, 300);
     }else{
       sendTwister();
     }
@@ -162,7 +163,7 @@
     if (time - elapsed < 0 || elapsed === 0){
       var t = twisters.getFirstDead();
       t.mask = mask;
-      t.reset(840, game.world.randomY);
+      t.reset(game.world.randomX, game.world.randomY);
       elapsed = time - 3;
     }
   }
@@ -190,18 +191,19 @@
     score += 10;
     txtScore.text = 'score: ' + score;
 
-    if(score > 60 && !balloon2){
+    if(player.assets > 5 && !balloon2){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
       game.physics.enable(balloon2, Phaser.Physics.ARCADE);
+      balloon2.mask = mask;
     }else{
       return;
     }
   }
 
-
   var i = 1;
+  
   function displayWorld(){
     i++;
 
