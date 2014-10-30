@@ -1,10 +1,10 @@
-var world2BGM, witchLaugh;
+var world2BGM, witchLaugh, victoryEmerald, witch;
 
 
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, victoryEmerald, fallOffSound, witch;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, fallOffSound;
   var witchAlive = false;
   function create(){
     score = 0;
@@ -74,10 +74,12 @@ var world2BGM, witchLaugh;
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(levelUp);
+    var winKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    winKey.onDown.add(winState);
 
-    game.time.events.add(5000, addWitch);
+    //game.time.events.add(5000, addWitch);
+    addWitch();
+
 
   }
 
@@ -97,7 +99,7 @@ var world2BGM, witchLaugh;
     }else if (cursors.down.isDown){
       player.body.velocity.y = 100;
       player.play('down');
-    }else{
+    } else {
       player.animations.stop();
     }
 
@@ -130,6 +132,8 @@ var world2BGM, witchLaugh;
     txtTime.text = 'time: '+ time;
     if(!time)
       //world2BGM.destroy();
+
+      //player.kill();
       game.state.start('goBackToKansas');
   }
 
@@ -141,7 +145,7 @@ var world2BGM, witchLaugh;
     },
     playerWins: function() {
       world2BGM.destroy();
-      victoryEmerald.play();
+      //victoryEmerald.play();
       witch.kill();
       player.kill();
       game.state.start('goToWin');
@@ -170,6 +174,12 @@ var world2BGM, witchLaugh;
   function witchBanish(){
       witchLaughter.play();
       player.reset(48, 48);
+  }
+
+  function winState(){
+    game.world.removeAll();
+    world2BGM.destroy();
+    game.state.start('goToWin');
   }
 
 

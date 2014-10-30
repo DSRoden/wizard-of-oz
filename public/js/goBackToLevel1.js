@@ -12,6 +12,7 @@
 
 function restartGame (){
   game.state.start('level1');
+
 }
 
 

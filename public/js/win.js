@@ -3,6 +3,7 @@
 
   function create(){
   game.add.sprite('0', '0', 'win');
+  victoryEmerald.play();
 
   //var playToWin = game.add.button(300, 540, 'goBackBtn', replayGame);
 
