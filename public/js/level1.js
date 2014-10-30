@@ -43,9 +43,8 @@
 
     player.body.collideWorldBounds = true;
 
-    balloon = game.add.sprite(655, 620, 'balloon', 1);
+    balloon = game.add.sprite(655, 620, 'greyballoon', 1);
     balloon.anchor.setTo(0.5, 0.5);
-    balloon.tint = '0#ff00ff';
 
     //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
@@ -191,7 +190,7 @@
     score += 10;
     txtScore.text = 'score: ' + score;
 
-    if(score >= 10){
+    if(score > 60 && !balloon2){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
