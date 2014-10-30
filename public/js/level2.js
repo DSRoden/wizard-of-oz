@@ -1,5 +1,5 @@
 (function(){
-  game.state.add('level2', {create:create, update:update});
+  game.state.add('level2', {create:create, update:update, render:render});
 
   var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
 
@@ -34,7 +34,7 @@
     world2BGM.play();
     fallOffSound = game.add.audio('fallOffSound');
     //map.setCollisionBetween(54, 83);
-    //layer.debug = true;
+    layer.debug = true;
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -45,18 +45,17 @@
 
     // Player
     player = game.add.sprite(48, 48, 'player', 1);
-    player.animations.add('left', [8,9], 10, true);
-    player.animations.add('right', [1,2], 10, true);
-    player.animations.add('up', [11,12,13], 10, true);
-    player.animations.add('down', [4,5,6], 10, true);
+    player.animations.add('left', [0,1], 10, true);
+    player.animations.add('right', [3,4], 10, true);
+    player.animations.add('up', [5], 10, true);
+    player.animations.add('down', [2], 10, true);
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds = true;
-    player.anchor.setTo(0.5);
 
     game.camera.follow(player);
 
-    player.body.setSize(10, 14, 2, 1);
+    player.body.setSize(10, 10, 6, player.body.height - 10);
 
     // Twisters
     twisters = game.add.group();
@@ -94,6 +93,10 @@
     }else{
       player.animations.stop();
     }
+  }
+
+  function render(){
+    game.debug.body(player);
   }
 
   var elapsed = 0;
