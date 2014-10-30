@@ -170,6 +170,7 @@
 
   function twisterThrow(){
     player.reset(game.world.randomX, game.world.randomY);
+    twisterM.play();
   }
 
   function move(){
