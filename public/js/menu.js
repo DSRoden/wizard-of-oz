@@ -7,7 +7,6 @@
 
     game.load.tilemap('mapGold', '../assets/world2/oz_world.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('mapBw', '../assets/world1/kansas.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles', '../assets/catastrophi_tiles_16.png');
     game.load.image('twister', '../assets/world1/tornado.png');
     game.load.image('moneyBag', '../assets/world1/package.png');
     game.load.image('kansas', '../assets/world1/tmw_desert_spacing_bw.png');
