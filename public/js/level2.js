@@ -22,8 +22,10 @@
     world2BGM = game.add.audio('world2BG');
     world2BGM.play();
     //map.setCollisionBetween(54, 83);
+
     //layer.debug = true;
     fallOffSound = game.add.audio('fallOffSound');
+
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -34,17 +36,17 @@
 
     // Player
     player = game.add.sprite(48, 48, 'player', 1);
-    player.animations.add('left', [8,9], 10, true);
-    player.animations.add('right', [1,2], 10, true);
-    player.animations.add('up', [11,12,13], 10, true);
-    player.animations.add('down', [4,5,6], 10, true);
+    player.animations.add('left', [0,1], 10, true);
+    player.animations.add('right', [3,4], 10, true);
+    player.animations.add('up', [5], 10, true);
+    player.animations.add('down', [2], 10, true);
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds = true;
 
     game.camera.follow(player);
 
-    player.body.setSize(10, 14, 2, 1);
+    player.body.setSize(10, 10, 6, player.body.height - 10);
 
     // Twisters
     twisters = game.add.group();
@@ -116,7 +118,7 @@
       world2BGM.destroy();
       victoryEmerald.play();
     }
-  }
+  };
 
 
 })();
