@@ -34,10 +34,10 @@
 
     //Player sprite code
     player = game.add.sprite(645, 665, 'player', 1);
-    player.animations.add('left', [0,1], 10, true);
-    player.animations.add('right', [3,4], 10, true);
-    player.animations.add('up', [5], 10, true);
-    player.animations.add('down', [2], 10, true);
+    player.animations.add('left', [0, 1], 10, true);
+    player.animations.add('right', [4, 5], 10, true);
+    player.animations.add('up', [6, 7], 10, true);
+    player.animations.add('down', [8, 9], 10, true);
     player.assets = 0;
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
