@@ -1,8 +1,10 @@
+var world2BGM, witchLaugh, victoryEmerald, witch;
+
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
-
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, fallOffSound;
+  var witchAlive = false;
   function create(){
     //score = 0;
     time = 90;
@@ -11,7 +13,6 @@
     map.addTilesetImage('Oz');
     layer = map.createLayer(0);
     layer.resizeWorld();
-    layer.debug = true;
 
     dieTiles = [6,7,8,14,15,16,22,23,24,30,31,32,38,39,40,41,43,44,46,47,48];
     winTiles = [1,2,3,4,5,9,10,11,12,13,17,18,19,20,21,25,26,27,28,29,33,34,35,36,37];
@@ -19,6 +20,7 @@
     map.setTileIndexCallback(winTiles, offPath.playerWins, this);
 
     victoryEmerald = game.add.audio('victoryEmerald');
+    witchLaughter = game.add.audio('witchLaughter');
     world2BGM = game.add.audio('world2BG');
     world2BGM.play();
     //map.setCollisionBetween(54, 83);
@@ -59,8 +61,13 @@
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(levelUp);
+    var winKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    winKey.onDown.add(winState);
+
+    //game.time.events.add(5000, addWitch);
+    addWitch();
+
+
   }
 
   function update(){
@@ -79,9 +86,15 @@
     }else if (cursors.down.isDown){
       player.body.velocity.y = 100;
       player.play('down');
-    }else{
+    } else {
       player.animations.stop();
     }
+
+    if(witch){
+      moveWitch();
+    }
+    game.physics.arcade.overlap(player, witch, witchBanish);
+
   }
 
 var elapsed = 0;
@@ -101,7 +114,10 @@ var elapsed = 0;
     time--;
     txtTime.text = 'time: '+ time;
     if(!time)
-      game.state.restart();
+      //world2BGM.destroy();
+
+      //player.kill();
+      game.state.start('goBackToKansas');
   }
 
   var offPath = {
@@ -114,9 +130,43 @@ var elapsed = 0;
     },
     playerWins: function() {
       world2BGM.destroy();
-      victoryEmerald.play();
+      score += time;
+      //victoryEmerald.play();
+      witch.kill();
+      player.kill();
+      game.state.start('goToWin');
     }
   };
+
+  function addWitch(){
+    witch = game.add.sprite(200, 40, 'witch', 1);
+    witch.alive = true;
+    witch.enableBody = true;
+    witch.physicsBodyType = Phaser.Physics.ARCADE;
+    console.log('adding witch');
+    console.log(witch.alive);
+    witchAlive = true;
+    game.physics.enable(witch, Phaser.Physics.ARCADE);
+    witch.body.collideWorldBounds = true;
+    witch.scale.x = 0.70;
+    witch.scale.y = 0.70;
+  }
+
+  function moveWitch(){
+    console.log(witch);
+    game.physics.arcade.accelerateToObject(witch, player, 25);
+  }
+
+  function witchBanish(){
+      witchLaughter.play();
+      player.reset(48, 48);
+  }
+
+  function winState(){
+    game.world.removeAll();
+    world2BGM.destroy();
+    game.state.start('goToWin');
+  }
 
 
 })();

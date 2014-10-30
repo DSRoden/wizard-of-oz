@@ -90,8 +90,8 @@
     cursors = game.input.keyboard.createCursorKeys();
 
     //Spacebar takes you to next level
-    /*var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(levelUp);*/
+    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(goToOz);
   }
 
   function update(){
@@ -133,6 +133,7 @@
     }
 
 }
+
   function levelUp(){
     player.kill();
     game.camera.follow(balloon2);
@@ -144,7 +145,7 @@
   }
 
   function goToOz(){
-    balloon2.kill();
+    if(balloon2){balloon2.kill();}
     twisters.destroy();
     moneyBags.destroy();
     game.world.removeAll();
@@ -203,7 +204,7 @@
   }
 
   var i = 1;
-  
+
   function displayWorld(){
     i++;
 
