@@ -7,6 +7,7 @@
   function create(){
     score = 0;
     time = 90;
+    assets = 0;
 
     //Setting up the tilemap and layer
     map = game.add.tilemap('mapBw', 16, 16);
@@ -38,7 +39,7 @@
     player.animations.add('right', [3,4], 10, true);
     player.animations.add('up', [5], 10, true);
     player.animations.add('down', [2], 10, true);
-    player.assets = 0;
+
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.collideWorldBounds = true;
@@ -58,14 +59,35 @@
     // Score and timer
     txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
     txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
+    txtAssets = game.add.text(10, 60, 'assets: ' + assets + '/6', { font: "20px Arial", fill: "#ffffff"});
 
     timer = game.time.events.loop(1000, subtractTime);
     txtScore.fixedToCamera = true;
     txtTime.fixedToCamera = true;
+    txtAssets.fixedToCamera = true;
 
     //assets
-    txtAssets = game.add.text(10, 60, 'asssets: ', { font: "20px Arial", fill: "#ffffff"});
-    moneyBagBw1 = game.add.sprite(100,60, 'moneyBagBw', 1);
+
+  /*  assetsColor = game.add.group();
+    assetsColor.fixedToCamera = true;
+
+    for(var j = 0; j < assets; j++){
+      var assetC = game.add.sprite(85 +(j*20), 66, 'moneyBag');
+      assetC.scale.setTo(0.75, 0.75);
+      assetC.anchor.setTo(0.5,0.5);
+      assetsColor.add(assetC);
+    }
+
+    assets = game.add.group();
+    assets.fixedToCamera = true;
+    for(var i = 0; i < 6; i++){
+      var asset = game.add.sprite(85 +(i*20), 66, 'moneyBagBw');
+      asset.scale.setTo(0.75, 0.75);
+      asset.anchor.setTo(0.5,0.5);
+      assets.add(asset);
+    }*/
+
+
 
     // Twisters
     twisters = game.add.group();
@@ -191,7 +213,8 @@
   function collectMoney(player, moneyBag){
     moneyBag.kill();
     collectM.play();
-    player.assets++;
+    assets ++;
+    txtAssets.text = 'assets: '+ assets + '/6';
     score += 10;
     txtScore.text = 'score: ' + score;
 
