@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, txtAssets, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
+  var previousAssets, map, layer, cursors, player, mask, txtScore, txtTime, txtAssets, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
       elapsed = 0;
 
   function create(){
@@ -68,23 +68,14 @@
 
     //assets
 
-  /*  assetsColor = game.add.group();
-    assetsColor.fixedToCamera = true;
+    assetsBw = game.add.group();
+    assetsBw.createMultiple(6, 'moneyBagBw');
 
-    for(var j = 0; j < assets; j++){
-      var assetC = game.add.sprite(85 +(j*20), 66, 'moneyBag');
-      assetC.scale.setTo(0.75, 0.75);
-      assetC.anchor.setTo(0.5,0.5);
-      assetsColor.add(assetC);
-    }
+    assetsColor = game.add.group();
+    assetsColor.createMultiple(6, 'moneyBag');
 
-    assets = game.add.group();
-    assets.fixedToCamera = true;
-    for(var i = 0; i < 6; i++){
-      var asset = game.add.sprite(85 +(i*20), 66, 'moneyBagBw');
-      asset.scale.setTo(0.75, 0.75);
-      asset.anchor.setTo(0.5,0.5);
-      assets.add(asset);
+  /*  for(var i = 0; i < 6; i++){
+      var assetBw = game.add.sprite(85 +(i*20), 66, 'moneyBagBw');
     }*/
 
 
@@ -137,6 +128,9 @@
       sendTwister();
     }
 
+    //if(assetsBw.getFirstDead() || previousAssets < assets)
+      //drawAssets();
+
     //Player movement using cursors
     if(cursors.left.isDown){
       player.body.velocity.x = -300;
@@ -158,6 +152,7 @@
       player.animations.stop();
     }
 
+    previousAssets = assets;
 }
   function levelUp(){
     player.kill();
@@ -215,10 +210,11 @@
     collectM.play();
     assets ++;
     txtAssets.text = 'assets: '+ assets + '/6';
+    //replaceAssets();
     score += 10;
     txtScore.text = 'score: ' + score;
 
-    if(score >= 10){
+    if(score >= 60){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
@@ -228,6 +224,23 @@
     }
   }
 
+  function drawAssets(){
+    var icon;
+    for(var j = 1; j < 7; j++){
+
+      if(j <= assets){
+        icon = assetsColor.getFirstDead().reset(85 +((j-1)*20), 66);
+      }else{
+        icon = assetsBw.getFirstDead().reset(85 + ((j-1)*20), 66);
+      }
+
+      //icon.fixedToCamera = true;
+      //icon.scale.setTo(0.75, 0.75);
+      //icon.anchor.setTo(0.5, 0.5);
+
+      //icon.reset(85 +((j-1)*20), 66);
+    }
+  }
 
   var i = 1;
   function displayWorld(){
