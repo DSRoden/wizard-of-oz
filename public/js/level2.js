@@ -1,11 +1,14 @@
+var world2BGM, witchLaugh;
+
+
 (function(){
   game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound, witch;
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, victoryEmerald, fallOffSound, witch;
   var witchAlive = false;
   function create(){
     score = 0;
-    time = 5;
+    time = 90;
 
     map = game.add.tilemap('mapGold', 16, 16);
     map.addTilesetImage('Oz');
@@ -30,6 +33,7 @@
     map.setTileIndexCallback([33,37], offPath.playerWins, this);*/
 
     victoryEmerald = game.add.audio('victoryEmerald');
+    witchLaughter = game.add.audio('witchLaughter');
     world2BGM = game.add.audio('world2BG');
     world2BGM.play();
     fallOffSound = game.add.audio('fallOffSound');
@@ -75,7 +79,6 @@
 
     game.time.events.add(5000, addWitch);
 
-
   }
 
   function update(){
@@ -98,15 +101,11 @@
       player.animations.stop();
     }
 
-    if(witchAlive === true){
+    if(witch){
       moveWitch();
     }
     game.physics.arcade.overlap(player, witch, witchBanish);
 
-
-    if(time === 1){
-        game.state.start('goBackToKansas');
-    }
   }
 
   /*function render(){
@@ -130,7 +129,8 @@
     time--;
     txtTime.text = 'time: '+ time;
     if(!time)
-      game.state.restart();
+      //world2BGM.destroy();
+      game.state.start('goBackToKansas');
   }
 
   var offPath = {
@@ -142,6 +142,9 @@
     playerWins: function() {
       world2BGM.destroy();
       victoryEmerald.play();
+      witch.kill();
+      player.kill();
+      game.state.start('goToWin');
     }
   };
 
@@ -165,6 +168,7 @@
   }
 
   function witchBanish(){
+      witchLaughter.play();
       player.reset(48, 48);
   }
 
