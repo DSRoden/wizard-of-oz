@@ -95,9 +95,9 @@
     }
   }
 
-  function render(){
+  /*function render(){
     game.debug.body(player);
-  }
+  }*/
 
   var elapsed = 0;
   function sendTwister(){
