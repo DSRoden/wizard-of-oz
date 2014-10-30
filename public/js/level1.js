@@ -78,9 +78,10 @@
     moneyBags._mask = mask;
     moneyBags.setAll('checkWorldBounds', true);
 
-    for(var i = 0; i < 6; i++){
-      var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
+    for(var i = 0; i < 9; i++){
+      var moneyBag = game.add.sprite((Math.floor(Math.random() * 1200)+ 100), (Math.floor(Math.random() * 1200)+ 100), 'moneyBag');
       moneyBags.add(moneyBag);
+      console.log(moneyBag.x, moneyBag.y);
     }
     moneyBags.setAll('body.gravity.y', 100);
     moneyBags.setAll('body.bounce.y', 1);
