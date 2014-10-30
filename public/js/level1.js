@@ -91,6 +91,8 @@
     //Spacebar takes you to next level
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(levelUp);
+
+
   }
 
   function update(){

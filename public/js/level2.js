@@ -1,11 +1,11 @@
 (function(){
-  game.state.add('level2', {create:create, update:update, render:render});
+  game.state.add('level2', {create:create, update:update});
 
-  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
-
+  var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound, witch;
+  var witchAlive = false;
   function create(){
     score = 0;
-    time = 90;
+    time = 5;
 
     map = game.add.tilemap('mapGold', 16, 16);
     map.addTilesetImage('Oz');
@@ -34,7 +34,7 @@
     world2BGM.play();
     fallOffSound = game.add.audio('fallOffSound');
     //map.setCollisionBetween(54, 83);
-    layer.debug = true;
+    //layer.debug = true;
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -72,6 +72,10 @@
 
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(levelUp);
+
+    game.time.events.add(5000, addWitch);
+
+
   }
 
   function update(){
@@ -92,6 +96,16 @@
       player.play('down');
     }else{
       player.animations.stop();
+    }
+
+    if(witchAlive === true){
+      moveWitch();
+    }
+    game.physics.arcade.overlap(player, witch, witchBanish);
+
+
+    if(time === 1){
+        game.state.start('goBackToKansas');
     }
   }
 
@@ -130,6 +144,29 @@
       victoryEmerald.play();
     }
   };
+
+  function addWitch(){
+    witch = game.add.sprite(200, 40, 'witch', 1);
+    witch.alive = true;
+    witch.enableBody = true;
+    witch.physicsBodyType = Phaser.Physics.ARCADE;
+    console.log('adding witch')
+    console.log(witch.alive);
+    witchAlive = true;
+    game.physics.enable(witch, Phaser.Physics.ARCADE);
+    witch.body.collideWorldBounds = true;
+    witch.scale.x = 0.70;
+    witch.scale.y = 0.70;
+  }
+
+  function moveWitch(){
+    console.log(witch)
+    game.physics.arcade.accelerateToObject(witch, player, 25);
+  }
+
+  function witchBanish(){
+      player.reset(48, 48);
+  }
 
 
 })();
