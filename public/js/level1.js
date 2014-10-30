@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
+  var map, layer, cursors, player, mask, txtScore, txtTime, txtAssets, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
       elapsed = 0;
 
   function create(){
@@ -58,10 +58,14 @@
     // Score and timer
     txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
     txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
-    //txtAssets = game.add.text(10, 60, 'asssets: ' + player.assets + '/6', { font: "20px Arial", fill: "#ffffff"});
+
     timer = game.time.events.loop(1000, subtractTime);
     txtScore.fixedToCamera = true;
     txtTime.fixedToCamera = true;
+
+    //assets
+    txtAssets = game.add.text(10, 60, 'asssets: ', { font: "20px Arial", fill: "#ffffff"});
+    moneyBagBw1 = game.add.sprite(100,60, 'moneyBagBw', 1);
 
     // Twisters
     twisters = game.add.group();
