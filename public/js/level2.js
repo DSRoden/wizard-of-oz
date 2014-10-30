@@ -4,7 +4,7 @@
   var map, layer, cursors, player, time, timer, txtScore, txtTime, twisters, world1BGM, world2BGM, victoryEmerald, fallOffSound;
 
   function create(){
-    score = 0;
+    //score = 0;
     time = 90;
 
     map = game.add.tilemap('mapGold', 16, 16);

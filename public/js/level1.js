@@ -144,6 +144,9 @@
   }
 
   function goToOz(){
+    balloon2.kill();
+    twisters.destroy();
+    moneyBags.destroy();
     game.world.removeAll();
     world1BGM.destroy();
     game.state.start('level2');
@@ -187,7 +190,7 @@
     score += 10;
     txtScore.text = 'score: ' + score;
 
-    if(score >= 60){
+    if(score >= 10){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
