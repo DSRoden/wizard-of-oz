@@ -47,14 +47,6 @@
     balloon.anchor.setTo(0.5, 0.5);
     balloon.tint = '0#ff00ff';
 
-    // Score and timer
-    txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
-    txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
-    //txtAssets = game.add.text(10, 60, 'asssets: ' + player.assets + '/6', { font: "20px Arial", fill: "#ffffff"});
-    timer = game.time.events.loop(1000, subtractTime);
-    txtScore.fixedToCamera = true;
-    txtTime.fixedToCamera = true;
-
     //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
@@ -62,6 +54,14 @@
     layer.mask = mask;
 
     game.camera.follow(player);
+
+    // Score and timer
+    txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
+    txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
+    //txtAssets = game.add.text(10, 60, 'asssets: ' + player.assets + '/6', { font: "20px Arial", fill: "#ffffff"});
+    timer = game.time.events.loop(1000, subtractTime);
+    txtScore.fixedToCamera = true;
+    txtTime.fixedToCamera = true;
 
     // Twisters
     twisters = game.add.group();
