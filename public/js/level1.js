@@ -1,12 +1,13 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
+  var previousAssets, map, layer, cursors, player, mask, txtScore, txtTime, txtAssets, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
       elapsed = 0;
 
   function create(){
     score = 0;
     time = 90;
+    assets = 0;
 
     //Setting up the tilemap and layer
     map = game.add.tilemap('mapBw', 16, 16);
@@ -38,7 +39,7 @@
     player.animations.add('right', [4, 5], 10, true);
     player.animations.add('up', [6, 7], 10, true);
     player.animations.add('down', [8, 9], 10, true);
-    player.assets = 0;
+    assets = 0;
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.collideWorldBounds = true;
@@ -58,10 +59,26 @@
     // Score and timer
     txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
     txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
-    //txtAssets = game.add.text(10, 60, 'asssets: ' + player.assets + '/6', { font: "20px Arial", fill: "#ffffff"});
+    txtAssets = game.add.text(10, 60, 'assets: ' + assets + '/6', { font: "20px Arial", fill: "#ffffff"});
+
     timer = game.time.events.loop(1000, subtractTime);
     txtScore.fixedToCamera = true;
     txtTime.fixedToCamera = true;
+    txtAssets.fixedToCamera = true;
+
+    //assets
+
+    assetsBw = game.add.group();
+    assetsBw.createMultiple(6, 'moneyBagBw');
+
+    assetsColor = game.add.group();
+    assetsColor.createMultiple(6, 'moneyBag');
+
+  /*  for(var i = 0; i < 6; i++){
+      var assetBw = game.add.sprite(85 +(i*20), 66, 'moneyBagBw');
+    }*/
+
+
 
     // Twisters
     twisters = game.add.group();
@@ -95,7 +112,7 @@
   }
 
   function update(){
-    if(player.assets > 5)
+    if(assets > 5)
       displayWorld();
 
     game.physics.arcade.collide(player, layer);
@@ -110,6 +127,9 @@
     }else{
       sendTwister();
     }
+
+    //if(assetsBw.getFirstDead() || previousAssets < assets)
+      //drawAssets();
 
     //Player movement using cursors
     if(cursors.left.isDown){
@@ -132,6 +152,7 @@
       player.animations.stop();
     }
 
+    previousAssets = assets;
 }
 
   function levelUp(){
@@ -188,11 +209,13 @@
   function collectMoney(player, moneyBag){
     moneyBag.kill();
     collectM.play();
-    player.assets++;
+    assets ++;
+    txtAssets.text = 'assets: '+ assets + '/6';
+    //replaceAssets();
     score += 10;
     txtScore.text = 'score: ' + score;
 
-    if(player.assets > 5 && !balloon2){
+    if(assets > 5 && !balloon2){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
@@ -200,6 +223,24 @@
       balloon2.mask = mask;
     }else{
       return;
+    }
+  }
+
+  function drawAssets(){
+    var icon;
+    for(var j = 1; j < 7; j++){
+
+      if(j <= assets){
+        icon = assetsColor.getFirstDead().reset(85 +((j-1)*20), 66);
+      }else{
+        icon = assetsBw.getFirstDead().reset(85 + ((j-1)*20), 66);
+      }
+
+      //icon.fixedToCamera = true;
+      //icon.scale.setTo(0.75, 0.75);
+      //icon.anchor.setTo(0.5, 0.5);
+
+      //icon.reset(85 +((j-1)*20), 66);
     }
   }
 

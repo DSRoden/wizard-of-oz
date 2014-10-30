@@ -27,6 +27,7 @@ var world2BGM, witchLaugh, victoryEmerald, witch;
     //layer.debug = true;
     fallOffSound = game.add.audio('fallOffSound');
 
+
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
     txtTime  = game.add.text(10, 35, 'time: ' + time, { font: "20px Arial", fill: "#ffffff" });
@@ -97,7 +98,7 @@ var world2BGM, witchLaugh, victoryEmerald, witch;
 
   }
 
-var elapsed = 0;
+  var elapsed = 0;
   function sendTwister(){
     if (time - elapsed < 0 || elapsed === 0){
       var t = twisters.getFirstDead();
