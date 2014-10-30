@@ -11,30 +11,19 @@
     map.addTilesetImage('Oz');
     layer = map.createLayer(0);
     layer.resizeWorld();
+    layer.debug = true;
 
     dieTiles = [6,7,8,14,15,16,22,23,24,30,31,32,38,39,40,41,43,44,46,47,48];
     winTiles = [1,2,3,4,5,9,10,11,12,13,17,18,19,20,21,25,26,27,28,29,33,34,35,36,37];
     map.setTileIndexCallback(dieTiles, offPath.killPlayer, this);
-    /*map.setTileIndexCallback([14,15,16], offPath.killPlayer, this);
-    map.setTileIndexCallback([22,24], offPath.killPlayer, this);
-    map.setTileIndexCallback([30,32], offPath.killPlayer, this);
-    map.setTileIndexCallback([38,40], offPath.killPlayer, this);
-    map.setTileIndexCallback([41, 41], offPath.killPlayer, this);
-    map.setTileIndexCallback([43,44], offPath.killPlayer, this);
-    map.setTileIndexCallback([46,48], offPath.killPlayer, this);*/
-
     map.setTileIndexCallback(winTiles, offPath.playerWins, this);
-    /*map.setTileIndexCallback([9,13], offPath.playerWins, this);
-    map.setTileIndexCallback([17,21], offPath.playerWins, this);
-    map.setTileIndexCallback([25,29], offPath.playerWins, this);
-    map.setTileIndexCallback([33,37], offPath.playerWins, this);*/
 
     victoryEmerald = game.add.audio('victoryEmerald');
     world2BGM = game.add.audio('world2BG');
     world2BGM.play();
-    fallOffSound = game.add.audio('fallOffSound');
     //map.setCollisionBetween(54, 83);
     //layer.debug = true;
+    fallOffSound = game.add.audio('fallOffSound');
 
     // Score and timer
     txtScore = game.add.text(10, 10, "score: " + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -52,7 +41,6 @@
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds = true;
-    player.anchor.setTo(0.5);
 
     game.camera.follow(player);
 
@@ -120,7 +108,9 @@
     killPlayer: function () {
       fallOffSound.play();
       player.kill();
-      player.reset(48,48);
+      player.reset(48, 48);
+
+      //game.state.start('level2');
     },
     playerWins: function() {
       world2BGM.destroy();

@@ -1,7 +1,7 @@
 (function(){
   game.state.add('level1', {create:create, update:update});
 
-  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags,
+  var map, layer, cursors, player, mask, txtScore, txtTime, timer, time, world1BGM, collectMoneyM, twisterM, victoryBalloonM, moneyBag, moneyBags, balloon, balloon2;
       elapsed = 0;
 
   function create(){
@@ -33,7 +33,7 @@
 
 
     //Player sprite code
-    player = game.add.sprite(650, 650, 'player', 1);
+    player = game.add.sprite(645, 665, 'player', 1);
     player.animations.add('left', [0,1], 10, true);
     player.animations.add('right', [3,4], 10, true);
     player.animations.add('up', [5], 10, true);
@@ -42,6 +42,10 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.collideWorldBounds = true;
+
+    balloon = game.add.sprite(655, 620, 'balloon', 1);
+    balloon.anchor.setTo(0.5, 0.5);
+    balloon.tint = '0#ff00ff';
 
     // Score and timer
     txtScore = game.add.text(10, 10, 'score: ' + score,   { font: "20px Arial", fill: "#ffffff" });
@@ -82,15 +86,12 @@
     moneyBags.setAll('body.bounce.y', 1);
     moneyBags.setAll('body.collideWorldBounds', true);
 
-
-
-
     // Cursors move player
     cursors = game.input.keyboard.createCursorKeys();
 
     //Spacebar takes you to next level
-    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(levelUp);
+    /*var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(levelUp);*/
   }
 
   function update(){
@@ -101,6 +102,7 @@
     game.physics.arcade.collide(moneyBags, layer);
     game.physics.arcade.overlap(player, twisters, twisterThrow);
     game.physics.arcade.overlap(player, moneyBags, collectMoney);
+    game.physics.arcade.overlap(player, balloon2, levelUp);
     player.body.velocity.set(0);
 
     if(twisters.getFirstAlive()){
@@ -172,7 +174,19 @@
     moneyBag.kill();
     collectM.play();
     player.assets++;
+    score += 10;
+    console.log(score);
+    txtScore.text = 'score: ' + score;
+
+    if(score >= 60){
+      balloon.destroy();
+      balloon2 = game.add.sprite(655, 620, 'balloon', 1);
+      balloon2.anchor.setTo(0.5, 0.5);
+    }else{
+      return;
+    }
   }
+
 
   var i = 1;
   function displayWorld(){

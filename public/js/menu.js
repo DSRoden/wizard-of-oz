@@ -12,6 +12,7 @@
     game.load.image('moneyBag', '../assets/world1/package.png');
     game.load.image('kansas', '../assets/world1/tmw_desert_spacing_bw.png');
     game.load.image('Oz', '../assets/world2/tmw_desert_spacing_gold.png');
+    game.load.image('balloon', '../assets/world1/balloon.png');
     game.load.spritesheet('player', '../assets/wizard.png', 23, 30);
     game.load.audio('collectMoney', '../assets/audio/collectMoney.mp3');
     game.load.audio('twisterSound', '../assets/audio/twister.wav');
