@@ -6,7 +6,7 @@
 
   function create(){
     score = 0;
-    time = 3000000;
+    time = 90;
 
     //Setting up the tilemap and layer
     map = game.add.tilemap('mapBw', 16, 16);
@@ -50,7 +50,7 @@
     //Mask
     mask = game.add.graphics(player.x -100, player.y -100);
     mask.beginFill(0xffffff);
-    mask.drawCircle(100, 100, 250);
+    mask.drawCircle(100, 100, 2500);
     layer.mask = mask;
 
     game.camera.follow(player);
@@ -134,6 +134,16 @@
 
 }
   function levelUp(){
+    player.kill();
+    game.camera.follow(balloon2);
+    var tween = game.add.tween(balloon2);
+    tween.to({x: 1400, y: 0}, 4500);
+    tween.start();
+    score += time;
+    game.time.events.add(Phaser.Timer.SECOND*5, goToOz, this);
+  }
+
+  function goToOz(){
     game.world.removeAll();
     world1BGM.destroy();
     game.state.start('level2');
@@ -175,13 +185,13 @@
     collectM.play();
     player.assets++;
     score += 10;
-    console.log(score);
     txtScore.text = 'score: ' + score;
 
     if(score >= 60){
       balloon.destroy();
       balloon2 = game.add.sprite(655, 620, 'balloon', 1);
       balloon2.anchor.setTo(0.5, 0.5);
+      game.physics.enable(balloon2, Phaser.Physics.ARCADE);
     }else{
       return;
     }
