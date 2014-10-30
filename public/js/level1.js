@@ -105,7 +105,7 @@
     moneyBags.setAll('checkWorldBounds', true);
 
     for(var i = 0; i < 9; i++){
-      var moneyBag = game.add.sprite(game.world.randomX, game.world.randomY, 'moneyBag');
+      var moneyBag = game.add.sprite((Math.floor(Math.random()*1200)+100), (Math.floor(Math.random()*1200)+100), 'moneyBag');
       moneyBags.add(moneyBag);
     }
     moneyBags.setAll('body.gravity.y', 100);
